@@ -1,13 +1,9 @@
 #include "game.h"
 
-Game::Game(QWidget* parent)
-{
-    // create the scene
+Game::Game(QWidget* parent) {
     scene = new QGraphicsScene();
-    scene->setSceneRect(0,0,800,600); // make the scene 800x600 instead of infinity by infinity (default)
+    scene->setSceneRect(0,0,800,600);
 
-    // make the newly created scene the scene to visualize (since Game is a QGraphicsView Widget,
-    // it can be used to visualize scenes)
     setScene(scene);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -22,27 +18,24 @@ Game::Game(QWidget* parent)
     current_music->setPlaylist(music);
     current_music->setVolume(100);
     current_music->play();
-
 }
 
 
-void Game::displayMainMenu(){
-
+void Game::displayMainMenu() {
     scene->clear();
     setBackgroundBrush(QBrush(QImage(":/images/bg.png")));
-    // create the title text
+
     QGraphicsTextItem* titleText = new QGraphicsTextItem(QString("Смысл"));
-    QFont titleFont("Comic Sans",50);
+    QFont titleFont("Calibri",50);
     titleText->setFont(titleFont);
-    int txPos = this->width()/2 - titleText->boundingRect().width()/2;
+    int txPos = width()/2 - titleText->boundingRect().width()/2;
     int tyPos = 150;
     titleText->setPos(txPos,tyPos);
     scene->addItem(titleText);
 
     // create the play button
-
     playButton = new Button(QString("Играть"));
-    int bxPos = this->width()/2 - playButton->boundingRect().width()/2;
+    int bxPos = width()/2 - playButton->boundingRect().width()/2;
     int byPos = 275;
     playButton->setPos(bxPos,byPos);
     connect(playButton,SIGNAL(clicked()),this,SLOT(puzzle_start()));
@@ -50,17 +43,14 @@ void Game::displayMainMenu(){
 
     // create the quit button
     quitButton = new Button(QString("Выйти"));
-    int qxPos = this->width()/2 - quitButton->boundingRect().width()/2;
+    int qxPos = width()/2 - quitButton->boundingRect().width()/2;
     int qyPos = 350;
     quitButton->setPos(qxPos,qyPos);
     connect(quitButton,SIGNAL(clicked()),this,SLOT(close()));
     scene->addItem(quitButton);
-
-
 }
 
 void Game::puzzle_start() {
-
     scene->clear();
 
     puzzle = new Puzzle();

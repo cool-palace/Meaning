@@ -4,19 +4,26 @@
 #include <QObject>
 #include <QGraphicsItem>
 #include <QGraphicsItemGroup>
-#include "speechline.h"
 
-class DialogBox : public QObject, public QGraphicsRectItem
-{
+class Speechline {
+public:
+    Speechline(QString in_speaker = ":/images/player.png", QString in_line = "hello") :
+            speaker(in_speaker), line(in_line) {}
+
+    QString speaker;
+    QString line;
+};
+
+class DialogBox : public QObject, public QGraphicsRectItem {
     Q_OBJECT
 public:
     DialogBox(QGraphicsItem * parent = nullptr);
-    ~DialogBox();
+    ~DialogBox() override;
     static int start;
     static int end;
-    void keyPressEvent(QKeyEvent * event);
 
 public slots:
+    void keyPressEvent(QKeyEvent * event) override;
     void getBox(int start, int end);
     void dialog_recharge();
 

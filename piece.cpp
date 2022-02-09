@@ -5,13 +5,12 @@
 
 extern Game * game;
 
-Piece::Piece(int x, int y, QGraphicsItem * parent) : QObject(), QGraphicsPixmapItem(parent)
-{
+Piece::Piece(int x, int y, QGraphicsItem * parent) : QObject(), QGraphicsPixmapItem(parent) {
     if (y < 9) {
         QString str = ":/images/piece-%1%2.png";
         char ch = x + 65;
         setPixmap(QPixmap(str.arg(ch).arg(y+1)));
-        correct_place = {(qreal)x * 200/3, (qreal)y * 200/3};
+        correct_place = {static_cast<qreal>(x) * 200/3, static_cast<qreal>(y) * 200/3};
         ++pieces_left;
 
         if ((x%2 == 1 && y%2 == 0) || (x%2 == 0 && y%2 == 1)) {
@@ -24,7 +23,7 @@ Piece::Piece(int x, int y, QGraphicsItem * parent) : QObject(), QGraphicsPixmapI
         id = x + 65;
         setPixmap(QPixmap(str.arg(id)+"5-reversed.png"));
         reversed = true;
-        correct_place = {(qreal)x * 200/3, (qreal)(y - 5) * 200/3};
+        correct_place = {static_cast<qreal>(x) * 200/3, static_cast<qreal>(y - 5) * 200/3};
 
         if (x%2 == 1) {
             correct_place -= {24, 0};
@@ -34,14 +33,10 @@ Piece::Piece(int x, int y, QGraphicsItem * parent) : QObject(), QGraphicsPixmapI
     }
 
     if (x > 0) correct_place -= {3, 0};
-
     if (y > 0) correct_place -= {0, 2};
 
     setAcceptHoverEvents(true);
-
 }
-
-Piece::~Piece() {};
 
 void Piece::flip() {
     QString str = ":/images/piece-%1";
@@ -49,10 +44,9 @@ void Piece::flip() {
     reversed = false;
 }
 
-void Piece::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
-{
+void Piece::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
     if (!placed) {
-        this->setPos(mapToScene(event->pos() + m_shiftMouseCoords));
+        setPos(mapToScene(event->pos() + m_shiftMouseCoords));
     }
 }
 
@@ -64,15 +58,13 @@ void Piece::game_reset() {
     part2_started = false;
 }
 
-void Piece::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
-    m_shiftMouseCoords = this->pos() - mapToScene(event->pos());
-    this->setCursor(QCursor(Qt::ClosedHandCursor));
-    Q_UNUSED(event);
+void Piece::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+    m_shiftMouseCoords = pos() - mapToScene(event->pos());
+    setCursor(QCursor(Qt::ClosedHandCursor));
 }
 
-void Piece::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
-{
+void Piece::mouseReleaseEvent(QGraphicsSceneMouseEvent *event) {
+    Q_UNUSED(event);
     QPointF diff = pos() - correct_place;
     qreal delta = sqrt(diff.x()*diff.x() + diff.y()*diff.y());
     if (!placed && !reversed && delta < 5) {
@@ -87,7 +79,6 @@ void Piece::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
                 part2_started = true;
                 game->dialogbox->getBox(3,4);
             } else game->dialogbox->getBox(7,8);
-
         }
         emit piece_placed(pieces_left);
     }
@@ -102,13 +93,11 @@ void Piece::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     } else if (y() < -boundingRect().height()*0.25) {
         setY(- boundingRect().height()*0.25);
     }
-
-    this->setCursor(QCursor(Qt::ArrowCursor));
-    Q_UNUSED(event);
+    setCursor(QCursor(Qt::ArrowCursor));
 }
 
-void Piece::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
-{
+void Piece::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event) {
+    Q_UNUSED(event);
     if (!part2_started || !reversed) {
         return;
     } else flip();
@@ -118,10 +107,12 @@ void Piece::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
     }
 }
 
-void Piece::hoverEnterEvent(QGraphicsSceneHoverEvent *event){
+void Piece::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
+    Q_UNUSED(event);
     setCursor(QCursor(Qt::OpenHandCursor));
 }
 
-void Piece::hoverLeaveEvent(QGraphicsSceneHoverEvent *event){
+void Piece::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
+    Q_UNUSED(event);
     setCursor(QCursor(Qt::ArrowCursor));
 }

@@ -5,19 +5,20 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QBrush>
 
-class Button:public QObject, public QGraphicsRectItem{
+class Button:public QObject, public QGraphicsRectItem {
     Q_OBJECT
 public:
-    // constructors
-    Button(QString name, QGraphicsItem* parent=NULL);
-    ~Button();
+    Button(QString name, QGraphicsItem* parent = nullptr);
+    ~Button() override;
 
-    // public methods (events)
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
-    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+public slots:
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
+
 signals:
     void clicked();
+
 private:
     QGraphicsTextItem* text;
     QBrush brush;

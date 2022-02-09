@@ -10,11 +10,10 @@
 #include "speechline.h"
 #include "dialogbox.h"
 
-class Game: public QGraphicsView{
+class Game: public QGraphicsView {
     Q_OBJECT
 public:
-    // constructors
-    Game(QWidget * parent = 0);
+    Game(QWidget * parent = nullptr);
 
     QGraphicsScene * scene;
     DialogBox * dialogbox;
@@ -30,7 +29,6 @@ public:
 public slots:
     void puzzle_start();
     void displayMainMenu();
-
 };
 
 #endif // GAME_H

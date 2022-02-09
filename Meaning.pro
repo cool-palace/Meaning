@@ -16,7 +16,6 @@ SOURCES += \
     main.cpp \
     piece.cpp \
     puzzle.cpp \
-    speechline.cpp
 
 HEADERS += \
     button.h \
@@ -24,7 +23,6 @@ HEADERS += \
     game.h \
     piece.h \
     puzzle.h \
-    speechline.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -8,18 +8,16 @@
 #include <button.h>
 
 
-class Puzzle : public QObject, public QGraphicsPixmapItem
-{
+class Puzzle : public QObject, public QGraphicsPixmapItem {
     Q_OBJECT
 public:
     Puzzle(QGraphicsItem* parent = nullptr);
-    ~Puzzle();
+    ~Puzzle() override;
+
     Button* quitButton;
 
 public slots:
     void score_update(int pieces_left);
-
-signals:
 
 private:
     Piece * piece [6][10];
@@ -29,7 +27,6 @@ private:
     QGraphicsRectItem * score_bg;
     QGraphicsTextItem * score;
     QString score_str = "<p style=\"text-align:center;\">Осталось собрать деталей:<br>%1</p>";
-
 };
 
 #endif // PUZZLE_H

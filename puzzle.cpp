@@ -3,8 +3,7 @@
 
 extern Game * game;
 
-Puzzle::Puzzle(QGraphicsItem *parent) : QObject(), QGraphicsPixmapItem(parent)
-{
+Puzzle::Puzzle(QGraphicsItem *parent) : QObject(), QGraphicsPixmapItem(parent) {
     setPixmap(QPixmap(":/images/bg.png"));
 
     brush.setStyle(Qt::SolidPattern);
@@ -25,9 +24,9 @@ Puzzle::Puzzle(QGraphicsItem *parent) : QObject(), QGraphicsPixmapItem(parent)
     for (int i = 0; i < 6; ++i) {
         for (int j = 0; j < 10; ++j) {
             piece[i][j] = new Piece(i, j, this);
-
             piece[i][j]->setPos(rand()%300+400, rand()%350+150);
 
+//            The following lines are used to simplify the testing process
 //            if (j < 9) {
 //                piece[i][j]->setPos(piece[i][j]->correct_place);
 //            } else piece[i][j]->setPos(rand()%300+400, rand()%350+150);
